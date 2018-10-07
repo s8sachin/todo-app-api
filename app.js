@@ -11,7 +11,7 @@ var app = express();
 
 // connect to db
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/todo-tasks-api')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/todo-tasks-api')
 .then(() => console.log('connection succesful'))
 .catch((err) => console.error(err));
 mongoose.set('debug', true);
