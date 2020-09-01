@@ -5,13 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+require('dotenv').config()
+
 var task_api = require('./routes/api/task');
 
 var app = express();
 
 // connect to db
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/todo-tasks-api')
+// || 'mongodb://localhost/todo-tasks-api'
+console.log(process.env.MONGODB_URI, 'XXXXXXXXX')
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => console.log('connection succesful'))
 .catch((err) => console.error(err));
 mongoose.set('debug', true);
@@ -24,7 +28,6 @@ app.use(cookieParser());
 // app.use(favicon(path.join(__dirname, 'public/images', 'favicon.png')));
 
 app.use('/api/tasks', task_api)
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
